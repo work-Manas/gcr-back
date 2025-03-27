@@ -1,0 +1,183 @@
+{
+  "summary": [
+    {
+      "heading": "Gauss-Elimination Method",
+      "content": "The Gauss-Elimination method is a direct method to solve a system of linear equations with a unknown. This method transforms the system into an upper triangular form and then applies back substitution to find the solution."
+    },
+    {
+      "heading": "Limitations of Gauss-Elimination",
+      "content": "The limitations of the Gauss-Elimination method are:\n1. Round off error.\n2. Pivoting issues (if pivot = 0 or poor near 0).\n3. Computational costs: This method involves O(n^3) operations, making it computationally expensive for large systems.\n4. Static system: Cannot handle systems with dynamically changing coefficients or iterative improvements."
+    },
+    {
+      "heading": "Comparison of Gauss Elimination with Iterative Methods",
+      "content": "Gauss elimination has a computational cost of O(n^3) while iterative methods have a computational cost of O(n^2). Gauss elimination is sensitive to round off errors, while iterative methods can achieve a desired precision. Gauss elimination is less efficient for large systems, while iterative methods are scalable and efficient for large systems."
+    },
+    {
+      "heading": "Condition for Diagonal Dominance",
+      "content": "For a system of linear equations represented by Ax=b, the coefficient matrix A is diagonally dominant if for every row i: |aii| >= sum(|aij|) with strict inequality |aii| > sum(|aij|)."
+    },
+    {
+      "heading": "How Diagonal Dominance Ensures Convergence of Gauss-Seidel",
+      "content": "Diagonal dominance ensures that the iterative updates do not diverge. Each new estimate of the variable depends more on its coefficient and less on the other variables, promoting stability. This condition helps the system converge because the contribution of the off-diagonal terms are small compared to the diagonal terms."
+    },
+    {
+      "heading": "Comparison of Jacobi and Gauss-Seidel Methods",
+      "content": "Jacobi updates variables simultaneously, while Gauss-Seidel updates variables sequentially. Jacobi has slower convergence compared to Gauss-Seidel, which has faster convergence due to the immediate use of updated values. Jacobi requires strong diagonal dominance, while Gauss-Seidel converges under milder conditions."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What is the Gauss-Elimination method used for?"
+    },
+    {
+      "question": "Describe the process of Gauss-Elimination."
+    },
+    {
+      "question": "What form does the system of equations take after applying Gauss-Elimination?"
+    },
+    {
+      "question": "What is back substitution and why is it used in Gauss-Elimination?"
+    },
+    {
+      "question": "List the limitations of the Gauss-Elimination method."
+    },
+    {
+      "question": "How does round-off error affect the Gauss-Elimination method?"
+    },
+    {
+      "question": "Explain the concept of pivoting in the context of Gauss-Elimination."
+    },
+    {
+      "question": "What happens if the pivot element is zero or close to zero?"
+    },
+    {
+      "question": "What is the computational complexity of the Gauss-Elimination method?"
+    },
+    {
+      "question": "Why is Gauss-Elimination computationally expensive for large systems?"
+    },
+    {
+      "question": "Can Gauss-Elimination handle systems with dynamically changing coefficients?"
+    },
+    {
+      "question": "How does Gauss-Elimination compare to iterative methods in terms of computational cost?"
+    },
+    {
+      "question": "How do Gauss-Elimination and iterative methods differ in their sensitivity to round-off errors?"
+    },
+    {
+      "question": "Which method is more suitable for large systems, Gauss-Elimination or iterative methods?"
+    },
+    {
+      "question": "Define diagonal dominance."
+    },
+    {
+      "question": "What inequality must be satisfied for a matrix to be diagonally dominant?"
+    },
+    {
+      "question": "Explain the strict inequality condition for diagonal dominance."
+    },
+    {
+      "question": "Why is diagonal dominance important for the convergence of the Gauss-Seidel method?"
+    },
+    {
+      "question": "How does diagonal dominance ensure that iterative updates in Gauss-Seidel do not diverge?"
+    },
+    {
+      "question": "How does the contribution of off-diagonal terms affect the convergence of Gauss-Seidel?"
+    },
+    {
+      "question": "What is the key difference in how Jacobi and Gauss-Seidel methods update variables?"
+    },
+    {
+      "question": "Which method, Jacobi or Gauss-Seidel, converges faster?"
+    },
+    {
+      "question": "Why does Gauss-Seidel generally converge faster than Jacobi?"
+    },
+    {
+      "question": "Which method requires stronger diagonal dominance, Jacobi or Gauss-Seidel?"
+    },
+    {
+      "question": "Under what conditions does Gauss-Seidel converge?"
+    },
+    {
+      "question": "What is the effect of a poor pivot element in Gauss elimination?"
+    },
+    {
+      "question": "Give an example of a situation where Gauss Elimination is better suited than iterative methods?"
+    },
+    {
+      "question": "Give an example of a situation where iterative methods are better suited than Gauss Elimination?"
+    },
+    {
+      "question": "Explain how back substitution works after the Gauss-Elimination has transformed the system of equations."
+    },
+    {
+      "question": "Does Gauss elimination always find a solution? Why or why not?"
+    },
+    {
+      "question": "What are the limitations of applying Gauss-Seidel and Jacobi method?"
+    },
+    {
+      "question": "Can diagonally non-dominant matrix be solved using Guass Seidel method?"
+    },
+    {
+      "question": "Can diagonally non-dominant matrix be solved using Jacobi method?"
+    },
+    {
+      "question": "Can Gauss elimination be used to find matrix inverse?"
+    },
+    {
+      "question": "What is partial pivoting in Gauss elimination?"
+    },
+    {
+      "question": "What is complete pivoting in Gauss elimination?"
+    },
+    {
+      "question": "Compare partial and complete pivoting."
+    },
+    {
+      "question": "Is the Gauss-Seidel method a direct or an iterative method?"
+    },
+    {
+      "question": "Is the Jacobi method a direct or an iterative method?"
+    },
+    {
+      "question": "In what scenario would you choose Gauss-Seidel over Jacobi?"
+    },
+    {
+      "question": "In what scenario would you choose Jacobi over Gauss-Seidel?"
+    },
+    {
+      "question": "What happens to the condition number during Gauss Elimination process?"
+    },
+    {
+      "question": "What are the advantages of using iterative methods for solving linear systems?"
+    },
+    {
+      "question": "How to improve the convergence of Gauss-Seidel?"
+    },
+    {
+      "question": "What can cause the failure of the Gauss-Seidel Method?"
+    },
+    {
+      "question": "Are the results of Gauss elimination precise or approximate?"
+    },
+    {
+      "question": "How to determine whether the system of equations are suitable for solving using iterative method?"
+    },
+    {
+      "question": "Explain the relationship between diagonal dominance and the convergence rate of the Gauss-Seidel method."
+    },
+    {
+      "question": "Is it possible for a matrix to be diagonally dominant in one row but not in another?"
+    },
+    {
+      "question": "Are there alternative numerical method than Gauss Elimination to solve the system of linear equations?"
+    },
+    {
+      "question": "Is Gauss Elimination applicable for solving non-square system of linear equations?"
+    }
+  ]
+}
