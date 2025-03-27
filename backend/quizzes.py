@@ -1,3 +1,4 @@
+from flask_jwt_extended import get_jwt_identity
 from flask import Blueprint, request, jsonify
 from bson import ObjectId
 from datetime import datetime
@@ -5,69 +6,118 @@ from database import db, fs  # Import db and fs from database.py
 from auth import role_required  # Import role_required from auth.py
 from pdfminer.high_level import extract_text
 from io import BytesIO
-from flask_jwt_extended import get_jwt_identity  # Import get_jwt_identity
-
 
 quizzes_bp = Blueprint("quizzes", __name__)
 
+# Simulated Gemini API integration based on your data format
 
-def generate_quiz_questions(prompt):
-    # Placeholder for Gemini API integration
-    return [
-        {
-            "question": "Sample question?",
-            "options": ["A", "B", "C", "D"],
-            "correct_answer": "B",
-            "topics": ["sample_topic"]
+
+def gemini_generate_quiz(pdf_path, students, performance_scores):
+    """
+    Generate personalized quiz questions for each student based on the provided PDF and performance data.
+    Input: PDF path (BytesIO), list of student IDs, and their performance scores.
+    Output: List of JSON objects, each containing student_id and a list of questions.
+    """
+    quizzes = []
+    for student in students:
+        # In a real implementation, this would call the Gemini API with PDF content and performance data
+        # Here, we use your sample data as a placeholder
+        quiz_data = {
+            "student_id": student,
+            "questions": [
+                {
+                    "question": "What is the capital of France?",
+                    "options": ["Berlin", "Madrid", "Paris", "Rome"],
+                    "answer": "Paris",
+                    "topic": "Geography"
+                },
+                {
+                    "question": "Which data structure uses LIFO?",
+                    "options": ["Queue", "Stack", "Linked List", "Array"],
+                    "answer": "Stack",
+                    "topic": "Data Structures"
+                },
+                {
+                    "question": "Who developed the theory of relativity?",
+                    "options": ["Newton", "Einstein", "Tesla", "Galileo"],
+                    "answer": "Einstein",
+                    "topic": "Physics"
+                },
+                {
+                    "question": "What is the output of 3 + 2 * 2 in Python?",
+                    "options": ["10", "7", "8", "5"],
+                    "answer": "7",
+                    "topic": "Programming"
+                },
+                {
+                    "question": "What is H2O commonly known as?",
+                    "options": ["Oxygen", "Hydrogen", "Water", "Carbon Dioxide"],
+                    "answer": "Water",
+                    "topic": "Chemistry"
+                }
+            ]
         }
-    ]
+        quizzes.append(quiz_data)
+    return quizzes
 
 
-@quizzes_bp.route("/assignments", methods=["POST"])
+@quizzes_bp.route("/generate", methods=["POST"])
 @role_required("teacher")
-def create_quiz_assignment():
-    user_id = get_jwt_identity()
+def generate_quiz():
+    """Generate a quiz based on uploaded notes."""
+    user_id = get_jwt_identity()  # Assumes JWT is set up elsewhere
     data = request.json
     class_id = ObjectId(data["classId"])
+    note_id = ObjectId(data["noteId"])
+    deadline = datetime.fromisoformat(data["deadline"])
 
+    # Verify teacher authorization
     if not db.classes.find_one({"_id": class_id, "teacherId": ObjectId(user_id)}):
         return jsonify({"error": "Unauthorized or class not found"}), 403
 
-    notes_ids = [ObjectId(nid) for nid in data["notesIds"]]
-    deadline = datetime.fromisoformat(data["deadline"])
+    # Verify note exists and is a PDF
+    note = db.notes.find_one({"_id": note_id})
+    if not note or note["content_type"] != "pdf":
+        return jsonify({"error": "Note not found or not a PDF"}), 404
 
+    # Retrieve PDF content
+    pdf_file = fs.get(ObjectId(note["content"]))
+    pdf_path = BytesIO(pdf_file.read())
+
+    # Get students in the class
+    students = [str(member["studentId"])
+                for member in db.classMembers.find({"classId": class_id})]
+    performance_scores = {}
+    for student in students:
+        perf = db.studentPerformance.find_one({"studentId": ObjectId(student)})
+        if perf and perf.get("topics"):
+            total_correct = sum(topic["correct"] for topic in perf["topics"])
+            total_questions = sum(topic["total"] for topic in perf["topics"])
+            performance_scores[student] = total_correct / \
+                total_questions if total_questions > 0 else 0
+        else:
+            performance_scores[student] = 0
+
+    # Generate personalized quizzes using your data format
+    quizzes = gemini_generate_quiz(pdf_path, students, performance_scores)
+
+    # Store quiz assignment
     quiz_assignment = {
         "classId": class_id,
-        "notesIds": notes_ids,
+        "noteId": note_id,
         "deadline": deadline,
         "created_at": datetime.utcnow()
     }
     quiz_id = db.quizAssignments.insert_one(quiz_assignment).inserted_id
 
-    students = db.classMembers.find({"classId": class_id})
-    notes_docs = db.notes.find({"_id": {"$in": notes_ids}})
-    notes_content = ""
-
-    for note in notes_docs:
-        if note["content_type"] == "text":
-            notes_content += note["content"] + " "
-        elif note["content_type"] == "pdf":
-            pdf_file = fs.get(ObjectId(note["content"]))
-            notes_content += extract_text(BytesIO(pdf_file.read())) + " "
-
-    for student in students:
-        student_id = student["studentId"]
-        perf = db.studentPerformance.find_one(
-            {"studentId": student_id}) or {"topics": []}
-        weak_topics = [t["topic"] for t in perf["topics"] if t.get(
-            "total", 0) > 0 and t["correct"] / t["total"] < 0.5]
-        prompt = f"Generate questions from: {notes_content}. Focus on: {', '.join(weak_topics)}"
-        questions = generate_quiz_questions(prompt)
-
+    # Store personalized quizzes for each student
+    for quiz_data in quizzes:
+        student_id = quiz_data["student_id"]
+        questions = quiz_data["questions"]
         personalized_quiz = {
             "quizAssignmentId": quiz_id,
-            "studentId": student_id,
-            "questions": questions,
+            "studentId": ObjectId(student_id),
+            "questions": questions,  # Store full question data including answer and topic
             "deadline": deadline,
             "answers": None,
             "score": None,
@@ -82,6 +132,7 @@ def create_quiz_assignment():
 @quizzes_bp.route("/<quiz_id>", methods=["GET"])
 @role_required("student")
 def get_quiz(quiz_id):
+    """Retrieve a student's personalized quiz."""
     user_id = get_jwt_identity()
     quiz = db.personalizedQuizzes.find_one(
         {"_id": ObjectId(quiz_id), "studentId": ObjectId(user_id)})
@@ -89,6 +140,7 @@ def get_quiz(quiz_id):
     if not quiz:
         return jsonify({"error": "Quiz not found"}), 404
 
+    # Return only questions and options, hiding answers
     questions = [{"question": q["question"], "options": q["options"]}
                  for q in quiz["questions"]]
     return jsonify({"questions": questions, "deadline": quiz["deadline"].isoformat()}), 200
@@ -97,6 +149,7 @@ def get_quiz(quiz_id):
 @quizzes_bp.route("/<quiz_id>/submit", methods=["POST"])
 @role_required("student")
 def submit_quiz(quiz_id):
+    """Submit a quiz and update performance metrics."""
     user_id = get_jwt_identity()
     quiz = db.personalizedQuizzes.find_one(
         {"_id": ObjectId(quiz_id), "studentId": ObjectId(user_id)})
@@ -104,39 +157,80 @@ def submit_quiz(quiz_id):
     if not quiz or quiz["submitted_at"]:
         return jsonify({"error": "Quiz not found or already submitted"}), 400
 
-    answers = request.json["answers"]
-    correct_count = sum(1 for i, q in enumerate(
-        quiz["questions"]) if q["correct_answer"] == answers[i])
+    answers = request.json["answers"]  # List of student answers
+    feedback = request.json.get("feedback")
+    correct_count = 0
+    weak_topics = set()
+
+    # Evaluate answers and identify weak topics
+    for i, q in enumerate(quiz["questions"]):
+        if q["answer"] == answers[i]:
+            correct_count += 1
+        else:
+            # Add topic of incorrect answer to weak topics
+            weak_topics.add(q["topic"])
+
     score = (correct_count / len(quiz["questions"])) * 100
 
-    for i, q in enumerate(quiz["questions"]):
-        correct = q["correct_answer"] == answers[i]
-        for topic in q["topics"]:
-            db.studentPerformance.update_one(
-                {"studentId": ObjectId(user_id), "topics.topic": topic},
-                {"$inc": {"topics.$.correct": 1 if correct else 0, "topics.$.total": 1}},
-                upsert=True
-            )
-
+    # Update quiz record
     db.personalizedQuizzes.update_one(
         {"_id": ObjectId(quiz_id)},
-        {"$set": {"answers": answers, "score": score, "submitted_at": datetime.utcnow(
-        ), "feedback": request.json.get("feedback")}}
+        {"$set": {
+            "answers": answers,
+            "score": score,
+            "submitted_at": datetime.utcnow(),
+            "feedback": feedback
+        }}
     )
+
+    # Update student performance
+    perf = db.studentPerformance.find_one({"studentId": ObjectId(user_id)}) or {
+        "topics": [], "weak_topics": []}
+    for topic in weak_topics:
+        topic_entry = next(
+            (t for t in perf["topics"] if t["topic"] == topic), None)
+        if topic_entry:
+            topic_entry["total"] += 1
+            if answers[i] == quiz["questions"][i]["answer"]:
+                topic_entry["correct"] += 1
+        else:
+            perf["topics"].append({"topic": topic, "correct": 0, "total": 1})
+        if topic not in perf["weak_topics"]:
+            perf["weak_topics"].append(topic)
+
+    total_correct = sum(t["correct"] for t in perf["topics"])
+    total_questions = sum(t["total"] for t in perf["topics"])
+    performance_matrix = int(
+        (total_correct / total_questions) * 100) if total_questions > 0 else 0
+
+    db.studentPerformance.update_one(
+        {"studentId": ObjectId(user_id)},
+        {"$set": {"topics": perf["topics"], "weak_topics": perf["weak_topics"],
+                  "performance_matrix": performance_matrix}},
+        upsert=True
+    )
+
     return jsonify({"score": score}), 200
 
 
 @quizzes_bp.route("/assignments/<quiz_id>/scores", methods=["GET"])
 @role_required("teacher")
 def get_scores(quiz_id):
+    """Retrieve scores and feedback for a quiz assignment."""
     user_id = get_jwt_identity()
     quiz_assignment = db.quizAssignments.find_one({"_id": ObjectId(quiz_id)})
 
-    if not quiz_assignment or str(quiz_assignment["teacherId"]) != user_id:
+    if not quiz_assignment or str(quiz_assignment.get("teacherId")) != user_id:
         return jsonify({"error": "Unauthorized or quiz not found"}), 403
 
     quizzes = db.personalizedQuizzes.find(
         {"quizAssignmentId": ObjectId(quiz_id)})
-    scores = [{"student_id": str(q["studentId"]), "score": q["score"],
-               "feedback": q["feedback"]} for q in quizzes if q["score"] is not None]
+    scores = []
+    for q in quizzes:
+        if q["score"] is not None:
+            scores.append({
+                "student_id": str(q["studentId"]),
+                "score": q["score"],
+                "feedback": q["feedback"]
+            })
     return jsonify({"scores": scores}), 200

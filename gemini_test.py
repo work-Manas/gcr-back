@@ -40,41 +40,38 @@ def load_image(image_path):
     return Image.open(image_path)
 
 
+n = 10
+perf_matrix = 0.9
+sid = "id12366969"
+
+
 def get_image_description(image_paths):
     """Uploads multiple images and gets descriptions from Gemini API."""
     images = [load_image(img) for img in image_paths]
 
-    prompt = """Please analyze the uploaded PDF and perform the following tasks:
+    prompt = f"""You are an AI assistant that extracts multiple-choice questions (MCQs) from an uploaded PDF. Your task is to analyze the content and generate {n} QUESTIONS MCQs based on the **difficulty level** defined as {perf_matrix}, Generated questions should vary in length and context, can be both simple and complex (can also be numerical questions if applicable). The output should be in the following JSON format:
+{{
+    "student_id": "{sid}" # this does not change,
+    "questions": [
+        {{
+        "question": "<Question text>",
+            "options": ["<Option 1>", "<Option 2>", "<Option 3>", "<Option 4>"],
+            "answer": "<Correct Answer>",
+            "topic": "<Relevant Topic>"
+        }},
+        ...
+    ]
+}}
 
-1.  **Summarize the content** and provide headings that accurately reflect the key topics and subtopics discussed in the document.
-
-2.  **Generate 50 questions** based on the content of the PDF. These questions should cover a range of difficulty and focus on key concepts, definitions, procedures, and comparisons presented in the document.
-
-3.  **Provide the output in JSON format.** The JSON structure should adhere to the following schema:
-
-```json
-{
-  "summary": [
-    {
-      "heading": "Heading 1",
-      "content": "Summary of Heading 1"
-    },
-    {
-      "heading": "Heading 2",
-      "content": "Summary of Heading 2"
-    },
-    // ... more headings
-  ],
-  "questions": [
-    {
-      "question": "Question 1"
-    },
-    {
-      "question": "Question 2"
-    },
-    // ... 50 questions
-  ]
-}"""
+### **Instructions:**
+- Analyze the content of the provided PDF.
+- Identify key concepts and generate {n} relevant MCQs.
+- Ensure **each question has exactly 4 answer options**.
+- Provide the **correct answer** as one of the options.
+- difficulty level is defined by the number ranging from 0 => Super easy, to 1 => Highest level and 0.5 being normal level questions.
+- Assign an appropriate **topic** to each question based on the content.
+- Format the response **strictly as valid JSON**.
+- Do **not** include explanations or extra text outside the JSON."""
 
     response = model.generate_content([prompt] + images)
 
@@ -98,7 +95,7 @@ def cleanup_images():
 
 
 if __name__ == "__main__":
-    pdf_file = "file.pdf"  # Replace with your PDF file
+    pdf_file = "file3.pdf"  # Replace with your PDF file
 
     print("\nConverting PDF pages to images...")
     image_files = convert_pdf_to_images(pdf_file)
@@ -107,8 +104,6 @@ if __name__ == "__main__":
         print("No images generated from the PDF.")
     else:
         print(f"Processing {len(image_files)} images with Gemini API...")
-        summary = get_image_description(image_files)
-        print("\n--- PDF Summary ---\n")
-        print(summary)
+        get_image_description(image_files)
 
     cleanup_images()
