@@ -1,0 +1,732 @@
+{
+  "student_id": "id12366971",
+  "questions": [
+    {
+      "question": "Difference equations model processes involving:",
+      "options": [
+        "Rates of changes",
+        "Derivatives",
+        "Relationships between changes",
+        "Integrals"
+      ],
+      "answer": "Relationships between changes",
+      "topic": "Difference Equations"
+    },
+    {
+      "question": "The Fibonacci relation is an example of a:",
+      "options": [
+        "Differential equation",
+        "Difference equation",
+        "Partial differential equation",
+        "Integral equation"
+      ],
+      "answer": "Difference equation",
+      "topic": "Difference Equations"
+    },
+    {
+      "question": "In the Fibonacci sequence, if F_n is the number of pairs of rabbits after n months, what is the value of F_0?",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "answer": "1",
+      "topic": "Fibonacci Sequence"
+    },
+    {
+      "question": "A second order linear homogeneous difference equation with constant coefficients is considered homogeneous if:",
+      "options": [
+        "All coefficients are zero",
+        "The highest term is zero",
+        "The right-hand side is zero",
+        "All terms are constant"
+      ],
+      "answer": "The right-hand side is zero",
+      "topic": "Homogeneous Difference Equations"
+    },
+    {
+      "question": "What form does the solution y_n take for a first-order linear homogeneous difference equation with constant coefficients, y_{n+1} - by_n = 0?",
+      "options": [
+        "y_n = c + b^n",
+        "y_n = cb^n",
+        "y_n = b^n",
+        "y_n = cn"
+      ],
+      "answer": "y_n = cb^n",
+      "topic": "First-Order Difference Equations"
+    },
+    {
+      "question": "In the general solution of a first-order linear homogeneous difference equation, y_n = cb^n, what does 'c' represent?",
+      "options": [
+        "A constant",
+        "A variable",
+        "The base of the exponent",
+        "The index n"
+      ],
+      "answer": "A constant",
+      "topic": "First-Order Difference Equations"
+    },
+    {
+      "question": "If a_k = 1 in the k-th order linear difference equation, the difference equation is said to be in:",
+      "options": [
+        "Homogeneous form",
+        "Non-homogeneous form",
+        "Standard form",
+        "General form"
+      ],
+      "answer": "Standard form",
+      "topic": "Difference Equations"
+    },
+    {
+      "question": "What is the other name for the quadratic equation derived while solving second-order linear homogeneous difference equations?",
+      "options": [
+        "Characteristic equation",
+        "Auxiliary equation",
+        "Differential equation",
+        "Integral equation"
+      ],
+      "answer": "Auxiliary equation",
+      "topic": "Second-Order Difference Equations"
+    },
+    {
+      "question": "If the roots r1 and r2 of the auxiliary equation are real and distinct, what is the general solution form?",
+      "options": [
+        "y_n = c1 + c2",
+        "y_n = c1*r1^n",
+        "y_n = c1*r1^n + c2*r2^n",
+        "y_n = c1 + c2*r2^n"
+      ],
+      "answer": "y_n = c1*r1^n + c2*r2^n",
+      "topic": "Second-Order Difference Equations"
+    },
+    {
+      "question": "If the auxiliary equation has equal roots 'r', the general solution takes the form:",
+      "options": [
+        "y_n = c1*r^n",
+        "y_n = c1 + c2",
+        "y_n = (c1+c2)r^n",
+        "y_n = (c1+c2*n)r^n"
+      ],
+      "answer": "y_n = (c1+c2*n)r^n",
+      "topic": "Second-Order Difference Equations"
+    },
+    {
+      "question": "If the roots of the auxiliary equation are complex numbers of the form a \u00b1 ib, the general solution involves:",
+      "options": [
+        "Polynomial functions",
+        "Exponential functions",
+        "Trigonometric functions",
+        "Logarithmic functions"
+      ],
+      "answer": "Trigonometric functions",
+      "topic": "Second-Order Difference Equations"
+    },
+    {
+      "question": "When solving a non-homogeneous difference equation, the general solution is the sum of:",
+      "options": [
+        "Complementary function and Integral function",
+        "Complementary function and Particular Integral",
+        "Homogeneous solution and Particular Integral",
+        "Homogeneous solution and Integral function"
+      ],
+      "answer": "Complementary function and Particular Integral",
+      "topic": "Non-Homogeneous Difference Equations"
+    },
+    {
+      "question": "For the difference equation 2a_n - 3a_{n-1} = 0, after replacing n by n+1, the equation becomes:",
+      "options": [
+        "2a_n - 3a_{n+1} = 0",
+        "2a_{n+1} - 3a_n = 0",
+        "2a_{n+1} + 3a_n = 0",
+        "2a_n + 3a_{n-1} = 0"
+      ],
+      "answer": "2a_{n+1} - 3a_n = 0",
+      "topic": "Difference Equations"
+    },
+    {
+      "question": "If roots are complex, r = sqrt(a^2+b^2). Then tan(\u03b8) equals:",
+      "options": [
+        "a/b",
+        "b/a",
+        "a*b",
+        "a-b"
+      ],
+      "answer": "b/a",
+      "topic": "Second-Order Difference Equations"
+    },
+    {
+      "question": "What is the solution of the equation r - 3/2 = 0?",
+      "options": [
+        "r = -3/2",
+        "r = 2/3",
+        "r = 3/2",
+        "r = 0"
+      ],
+      "answer": "r = 3/2",
+      "topic": "Algebra"
+    },
+    {
+      "question": "What is the method to solve the equation by converting to Z domain?",
+      "options": [
+        "Z transforms",
+        "Laplace transforms",
+        "Fourier transforms",
+        "Undetermined Coefficients"
+      ],
+      "answer": "Z transforms",
+      "topic": "Z Transforms"
+    },
+    {
+      "question": "In the equation, a_n = c*(3/2)^n, if a_4 = 81, then c equals:",
+      "options": [
+        "8",
+        "12",
+        "16",
+        "24"
+      ],
+      "answer": "16",
+      "topic": "Difference Equations"
+    },
+    {
+      "question": "When solving for non-homogenous equations, what is the role of particular integral?",
+      "options": [
+        "To find constant C",
+        "To find homogenous solution",
+        "To find a particular solution",
+        "To find general solution"
+      ],
+      "answer": "To find a particular solution",
+      "topic": "Non-Homogeneous Difference Equations"
+    },
+    {
+      "question": "For the trial solution for f(n) = n+c (Where C is a constant), the equation becomes:",
+      "options": [
+        "y_n = an^2 + bn +c",
+        "y_n = a",
+        "y_n = a+b",
+        "y_n = a_1n+b_1"
+      ],
+      "answer": "y_n = a_1n+b_1",
+      "topic": "Non-Homogeneous Difference Equations"
+    },
+    {
+      "question": "If the auxiliary equation is a cubic equation and the equal root is r, then the solution is:",
+      "options": [
+        "y_n = c_1r^n",
+        "y_n = c_1r^n + c_2nr^n",
+        "y_n = c_1 + c_2 + c_3",
+        "y_n = c_1r^n + c_2nr^n + c_3n^2r^n"
+      ],
+      "answer": "y_n = c_1r^n + c_2nr^n + c_3n^2r^n",
+      "topic": "Second-Order Difference Equations"
+    }
+  ]
+}{
+  "student_id": "id12366969",
+  "questions": [
+    {
+      "question": "A difference equation is considered homogeneous if:",
+      "options": [
+        "All coefficients are equal to 1",
+        "The right-hand side is a constant",
+        "The right-hand side is zero",
+        "It involves only first-order differences"
+      ],
+      "answer": "The right-hand side is zero",
+      "topic": "Homogeneous Difference Equations"
+    },
+    {
+      "question": "Which of the following best describes the Fibonacci relation in the given context?",
+      "options": [
+        "Rate of change of rabbits",
+        "Number of rabbits after a certain period.",
+        "The death rate of rabbits",
+        "Differential Equation"
+      ],
+      "answer": "Number of rabbits after a certain period.",
+      "topic": "Fibonacci Relation"
+    },
+    {
+      "question": "What is the condition for a Kth order linear difference equation with constant coefficients to be in standard form?",
+      "options": [
+        "The highest order term has a coefficient of zero",
+        "The lowest order term has a coefficient of one",
+        "The Kth term has a coefficient of one",
+        "All coefficients are non-zero"
+      ],
+      "answer": "The Kth term has a coefficient of one",
+      "topic": "Kth Order Difference Equations"
+    },
+    {
+      "question": "For a second-order linear homogeneous difference equation, if the roots of the auxiliary equation are real and equal, say 'r', what is the form of the general solution?",
+      "options": [
+        "y_n = C_1*r^n",
+        "y_n = C_1*r^n + C_2*n*r^n",
+        "y_n = C_1*r^n + C_2",
+        "y_n = (C_1 + C_2*n)"
+      ],
+      "answer": "y_n = C_1*r^n + C_2*n*r^n",
+      "topic": "Second Order Difference Equations"
+    },
+    {
+      "question": "If the roots of the auxiliary equation for a second-order linear homogeneous difference equation are complex numbers a\u00b1ib, what is the general solution?",
+      "options": [
+        "y_n = C_1*(a+ib)^n + C_2*(a-ib)^n",
+        "y_n = r^n(C_1*cos(n\u03b8) + C_2*sin(n\u03b8)), where r=sqrt(a^2+b^2), tan(\u03b8)=b/a",
+        "y_n = a^n + b^n",
+        "y_n = e^(an) + e^(bn)"
+      ],
+      "answer": "y_n = r^n(C_1*cos(n\u03b8) + C_2*sin(n\u03b8)), where r=sqrt(a^2+b^2), tan(\u03b8)=b/a",
+      "topic": "Second Order Difference Equations"
+    },
+    {
+      "question": "According to the given text, what happens to the solution if the auxiliary equation is a cubic equation with one equal root 'r'?",
+      "options": [
+        "The solution remains the same as the second-order case.",
+        "The solution is y_n = C_1*n*r^n + C_2*n^2*r^n + C_3*n^3*r^n",
+        "The solution is y_n = C_1*r^n + C_2*n*r^n + C_3*n^2*r^n",
+        "There is no solution."
+      ],
+      "answer": "The solution is y_n = C_1*r^n + C_2*n*r^n + C_3*n^2*r^n",
+      "topic": "Second Order Difference Equations"
+    },
+    {
+      "question": "If f(n) = n + C, where C is a constant, for a non-homogeneous difference equation, what form of trial solution is taken using the method of undetermined coefficients?",
+      "options": [
+        "y_n = a*n^2 + b*n + C",
+        "y_n = a*n + b",
+        "y_n = a*C^n",
+        "y_n = A"
+      ],
+      "answer": "y_n = a*n + b",
+      "topic": "Non-Homogeneous Difference Equations"
+    },
+    {
+      "question": "Consider the difference equation F_{n+2} = F_{n+1} + F_n, where F_0 = 1 and F_1 = 1. What type of equation is this?",
+      "options": [
+        "First order linear non-homogeneous",
+        "Second order non-linear homogeneous",
+        "Second order linear homogeneous with constant coefficients",
+        "First order non-linear homogeneous"
+      ],
+      "answer": "Second order linear homogeneous with constant coefficients",
+      "topic": "Difference Equation Types"
+    },
+    {
+      "question": "In the context of solving difference equations using Z-transforms, what is generally the first step?",
+      "options": [
+        "Applying inverse Z-transform",
+        "Finding U(z) by partial fraction method",
+        "Applying Z-transform to both sides of the equation",
+        "Applying inverse Z transform to both sides of the equation"
+      ],
+      "answer": "Applying Z-transform to both sides of the equation",
+      "topic": "Solving Difference Equations using Z-transforms"
+    },
+    {
+      "question": "The general solution for a first order linear homogeneous difference equation with constant coefficients y_{n+1} - by_n = 0 is?",
+      "options": [
+        "y_n = c*n",
+        "y_n = n",
+        "y_n = c*b^n",
+        "y_n = c/b^n"
+      ],
+      "answer": "y_n = c*b^n",
+      "topic": "First order linear homogeneous difference equations"
+    }
+  ]
+}{
+  "student_id": "id12366970",
+  "questions": [
+    {
+      "question": "Which of the following describes difference equations?",
+      "options": [
+        "Model processes involving rates of changes.",
+        "Model processes involving integrals.",
+        "Model processes involving relationships between changes of sequences.",
+        "Model processes that are always linear."
+      ],
+      "answer": "Model processes involving relationships between changes of sequences.",
+      "topic": "Difference Equations Definition"
+    },
+    {
+      "question": "In the Fibonacci relation (Fn+2 = Fn+1 + Fn), if F0 = 1 and F1 = 1, what is the value of F3?",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer": "3",
+      "topic": "Fibonacci Sequence"
+    },
+    {
+      "question": "What makes a difference equation 'homogeneous'?",
+      "options": [
+        "All coefficients are constants.",
+        "The right-hand side is zero.",
+        "All terms are linear.",
+        "It contains only one variable."
+      ],
+      "answer": "The right-hand side is zero.",
+      "topic": "Homogeneous Difference Equations"
+    },
+    {
+      "question": "The general solution of a first-order linear homogeneous difference equation y(n+1) - by(n) = 0 is of the form?",
+      "options": [
+        "y(n) = cn",
+        "y(n) = c + n",
+        "y(n) = cb^n",
+        "y(n) = bn"
+      ],
+      "answer": "y(n) = cb^n",
+      "topic": "First-Order Linear Homogeneous Equations"
+    },
+    {
+      "question": "What is the form of the auxiliary equation for a second-order linear homogeneous difference equation?",
+      "options": [
+        "Linear",
+        "Quadratic",
+        "Cubic",
+        "Exponential"
+      ],
+      "answer": "Quadratic",
+      "topic": "Second-Order Linear Homogeneous Equations"
+    },
+    {
+      "question": "What are the three cases for the general solution of second order linear homogeneous equation, based on the roots r1 and r2 of the auxiliary equation?",
+      "options": [
+        "Complex roots, distinct roots, one root",
+        "Real and complex roots, distinct roots, two roots",
+        "Real and distinct roots, real and equal roots, complex roots",
+        "Equal roots, distinct roots, three roots"
+      ],
+      "answer": "Real and distinct roots, real and equal roots, complex roots",
+      "topic": "Second-Order Linear Homogeneous Equations"
+    },
+    {
+      "question": "If the roots of the auxiliary equation of a second-order linear homogeneous difference equation are complex numbers a \u00b1 ib, then the general solution is of the form yn = ?",
+      "options": [
+        "yn = c1(a+ib)^n + c2(a-ib)^n",
+        "yn = (c1 + c2n)r^n",
+        "yn = r^n(c1cos(n\u03b8) + c2sin(n\u03b8)), where r = \u221a(a\u00b2+b\u00b2), tan(\u03b8) = b/a",
+        "yn = c1r1^n + c2r2^n"
+      ],
+      "answer": "yn = r^n(c1cos(n\u03b8) + c2sin(n\u03b8)), where r = \u221a(a\u00b2+b\u00b2), tan(\u03b8) = b/a",
+      "topic": "Second-Order Linear Homogeneous Equations"
+    },
+    {
+      "question": "If the auxiliary equation is a cubic equation and the root is r, what is the solution?",
+      "options": [
+        "yn = c1r^n",
+        "yn = c1r^n + c2.n.r^n",
+        "yn = c1r^n + c2.n.r^n + c3.n^2.r^n",
+        "yn = c1r^n + c2r^n+1"
+      ],
+      "answer": "yn = c1r^n + c2.n.r^n + c3.n^2.r^n",
+      "topic": "Second-Order Linear Homogeneous Equations"
+    },
+    {
+      "question": "What is the first step when solving a difference equation using Z-transforms?",
+      "options": [
+        "Apply partial fraction method.",
+        "Apply the inverse Z-transform.",
+        "Apply the Z-transform to both sides of the difference equation.",
+        "Find U(z) by partial fraction method."
+      ],
+      "answer": "Apply the Z-transform to both sides of the difference equation.",
+      "topic": "Solving Difference Equations Using Z-Transforms"
+    },
+    {
+      "question": "In the method of undetermined coefficients, if f(n) = n + C, what is the trial solution yn?",
+      "options": [
+        "yn = a*d^n",
+        "yn = a*n^2 + b*n + c",
+        "yn = n^2",
+        "yn = a*n + b"
+      ],
+      "answer": "yn = a*n + b",
+      "topic": "Non-Homogeneous Difference Equations"
+    },
+    {
+      "question": "In the method of undetermined coefficients, if f(n) = d^n, what is the trial solution yn?",
+      "options": [
+        "yn = a*d^n",
+        "yn = a*n + b",
+        "yn = d^n",
+        "yn = a*n^2 + b*n + c"
+      ],
+      "answer": "yn = a*d^n",
+      "topic": "Non-Homogeneous Difference Equations"
+    },
+    {
+      "question": "For the difference equation 2an - 3an-1 = 0, which substitution will make the equation in standard form?",
+      "options": [
+        "Replacing n by n+1",
+        "Dividing by 2",
+        "Dividing by 3",
+        "Multiplying by 2"
+      ],
+      "answer": "Replacing n by n+1",
+      "topic": "Solving Difference Equations"
+    },
+    {
+      "question": "Solve the difference equation 2an - 3an-1 = 0 and a4 = 81.",
+      "options": [
+        "16 * (3/2)^n",
+        "81 * (3/2)^n",
+        "8 * (3/2)^n",
+        "32 * (3/2)^n"
+      ],
+      "answer": "16 * (3/2)^n",
+      "topic": "Solving Difference Equations"
+    },
+    {
+      "question": "In the general solution of a non-homogeneous difference equation, yn = Complementary function + ?",
+      "options": [
+        "Homogeneous function",
+        "Particular Integral",
+        "Linear Function",
+        "Constant"
+      ],
+      "answer": "Particular Integral",
+      "topic": "Non-Homogeneous Difference Equations"
+    },
+    {
+      "question": "What is the relation between Z(Un+k) and Z(Un)?",
+      "options": [
+        "Z(Un+k) = z^k U(z)",
+        "Z(Un+k) = z U(z)",
+        "Z(Un+k) = z^-k U(z)",
+        "Z(Un+k) = z^k U(z-k)"
+      ],
+      "answer": "Z(Un+k) = z^k U(z)",
+      "topic": "Z-transform properties"
+    }
+  ]
+}{
+  "student_id": "id12366971",
+  "questions": [
+    {
+      "question": "Difference equations model processes involving relationships between:",
+      "options": [
+        "Integrals",
+        "Derivatives",
+        "Changes in sequences",
+        "Continuous functions"
+      ],
+      "answer": "Changes in sequences",
+      "topic": "Difference Equations Basics"
+    },
+    {
+      "question": "What is the order of the difference equation F\u2099\u208a\u2082 - F\u2099\u208a\u2081 - F\u2099 = 0?",
+      "options": [
+        "First",
+        "Second",
+        "Third",
+        "Fourth"
+      ],
+      "answer": "Second",
+      "topic": "Order of Difference Equations"
+    },
+    {
+      "question": "In the Fibonacci relation, given F\u2080 = 1 and F\u2081 = 1, what is the value of F\u2082?",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "answer": "2",
+      "topic": "Fibonacci Relation"
+    },
+    {
+      "question": "A difference equation is considered homogeneous if the right-hand side is:",
+      "options": [
+        "Positive",
+        "Negative",
+        "Zero",
+        "Constant"
+      ],
+      "answer": "Zero",
+      "topic": "Homogeneous Difference Equations"
+    },
+    {
+      "question": "What is the general solution form for a first-order linear homogeneous difference equation y\u2099\u208a\u2081 - by\u2099 = 0?",
+      "options": [
+        "y\u2099 = c + b\u2099",
+        "y\u2099 = cn",
+        "y\u2099 = cb\u2099",
+        "y\u2099 = c/b\u2099"
+      ],
+      "answer": "y\u2099 = cb\u2099",
+      "topic": "First Order Linear Homogeneous Equations"
+    },
+    {
+      "question": "In the solution form y\u2099 = cr\u207f for a difference equation, what does 'c' represent?",
+      "options": [
+        "Root",
+        "Variable",
+        "Constant",
+        "Function"
+      ],
+      "answer": "Constant",
+      "topic": "Solution Forms"
+    },
+    {
+      "question": "The equation ar\u00b2 + br + c = 0, derived from a second-order difference equation, is called the:",
+      "options": [
+        "Differential Equation",
+        "Characteristic Equation",
+        "Auxiliary Equation",
+        "Integral Equation"
+      ],
+      "answer": "Auxiliary Equation",
+      "topic": "Second Order Linear Homogeneous Equations"
+    },
+    {
+      "question": "If the roots of the auxiliary equation are real and equal, what is the general solution form?",
+      "options": [
+        "y\u2099 = c\u2081r\u2099",
+        "y\u2099 = c\u2081r\u2099 + c\u2082r\u2099",
+        "y\u2099 = (c\u2081 + c\u2082n)r\u2099",
+        "y\u2099 = c\u2081cos(r\u2099) + c\u2082sin(r\u2099)"
+      ],
+      "answer": "y\u2099 = (c\u2081 + c\u2082n)r\u2099",
+      "topic": "Second Order Linear Homogeneous Equations"
+    },
+    {
+      "question": "If the roots of the auxiliary equation are complex numbers a \u00b1 ib, which of the following variables needs to be calculated for the general solution?",
+      "options": [
+        "tan(a)",
+        "tan(b)",
+        "r = \u221a(a\u00b2 + b\u00b2)",
+        "a + b"
+      ],
+      "answer": "r = \u221a(a\u00b2 + b\u00b2)",
+      "topic": "Second Order Linear Homogeneous Equations"
+    },
+    {
+      "question": "If the roots of the auxiliary equation are complex numbers a \u00b1 ib, what is the formula for calculating tan\u03b8?",
+      "options": [
+        "tan\u03b8 = a/b",
+        "tan\u03b8 = b/a",
+        "tan\u03b8 = a*b",
+        "tan\u03b8 = (a+b)/2"
+      ],
+      "answer": "tan\u03b8 = b/a",
+      "topic": "Second Order Linear Homogeneous Equations"
+    },
+    {
+      "question": "In non-homogeneous difference equations, the general solution consists of the complementary function plus the:",
+      "options": [
+        "Derivative",
+        "Integral",
+        "Particular Integral",
+        "Homogeneous Solution"
+      ],
+      "answer": "Particular Integral",
+      "topic": "Non-Homogeneous Difference Equations"
+    },
+    {
+      "question": "For solving a non-homogeneous difference equation with f(n) = d\u207f, what is the trial solution form?",
+      "options": [
+        "y\u2099 = n",
+        "y\u2099 = ad\u207f",
+        "y\u2099 = a\u2099",
+        "y\u2099 = a + d"
+      ],
+      "answer": "y\u2099 = ad\u207f",
+      "topic": "Solution of Non-Homogeneous Equations"
+    },
+    {
+      "question": "Given the difference equation 2a\u2099 - 3a\u2099\u208b\u2081 = 0, the value of 'r' is found to be 3/2. What is the general solution form?",
+      "options": [
+        "a\u2099 = c(2/3)\u207f",
+        "a\u2099 = c + (3/2)\u207f",
+        "a\u2099 = c(3/2)\u207f",
+        "a\u2099 = c * n"
+      ],
+      "answer": "a\u2099 = c(3/2)\u207f",
+      "topic": "Solving Difference Equations"
+    },
+    {
+      "question": "What is the initial condition typically represented by in a difference equation?",
+      "options": [
+        "y\u2099",
+        "F\u2099",
+        "F\u2080",
+        "a\u2099\u208a\u2081"
+      ],
+      "answer": "F\u2080",
+      "topic": "Initial Conditions"
+    },
+    {
+      "question": "What happens if *fn* is non-zero for some *n*?",
+      "options": [
+        "Homogeneous",
+        "Non-Homogeneous",
+        "Linear",
+        "Constant"
+      ],
+      "answer": "Non-Homogeneous",
+      "topic": "Homogeneous Difference Equations"
+    },
+    {
+      "question": "According to the text, for a first order linear homogenous difference equation, if y\u2080=d, what is the value of c?",
+      "options": [
+        "0",
+        "d",
+        "r",
+        "n"
+      ],
+      "answer": "d",
+      "topic": "First Order Linear Homogeneous Equations"
+    },
+    {
+      "question": "Which of the following is NOT a case for solving second order linear homogeneous equations?",
+      "options": [
+        "Real and Distinct Roots",
+        "Real and Equal Roots",
+        "Complex Numbers",
+        "Imaginary Roots"
+      ],
+      "answer": "Imaginary Roots",
+      "topic": "Second Order Linear Homogeneous Equations"
+    },
+    {
+      "question": "What is the general solution of Fn+2 = Fn+1 + Fn, n>0, F0 = F1 = 1?",
+      "options": [
+        "(\u221a5 + 1) / (2\u221a5)",
+        "(\u221a5 - 1) / (2\u221a5)",
+        "(((1+\u221a5)/2)^n) + (((1-\u221a5)/2)^n)",
+        "(((1+\u221a5)/(2\u221a5)) * ((1+\u221a5)/2)^n) + (((\u221a5-1)/(2\u221a5)) * ((1-\u221a5)/2)^n)"
+      ],
+      "answer": "(((1+\u221a5)/(2\u221a5)) * ((1+\u221a5)/2)^n) + (((\u221a5-1)/(2\u221a5)) * ((1-\u221a5)/2)^n)",
+      "topic": "Fibonacci Relation"
+    },
+    {
+      "question": "If f(n) = n + c where c is a constant, what is the trial solution?",
+      "options": [
+        "yn = ad^n",
+        "yn = n",
+        "yn = a1n + b1",
+        "yn = a1n^2 + bn + c1"
+      ],
+      "answer": "yn = a1n + b1",
+      "topic": "Non-Homogeneous Difference Equations"
+    },
+    {
+      "question": "What leads to the differential equations?",
+      "options": [
+        "Integrals",
+        "Changes or differences of the sequences",
+        "Continuous functions",
+        "Variables"
+      ],
+      "answer": "Changes or differences of the sequences",
+      "topic": "Difference Equations Basics"
+    }
+  ]
+}
