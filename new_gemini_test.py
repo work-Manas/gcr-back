@@ -5,10 +5,10 @@ import json
 import glob
 import time
 import google.generativeai as genai
-import fitz  # PyMuPDF
 import os
 from dotenv import load_dotenv
 from PIL import Image
+import concurrent.futures
 
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -17,21 +17,56 @@ genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash")
 
 
-def convert_pdf_to_images(pdf_path, output_folder="pdf_images"):
-    """Converts each page of a PDF into an image and saves it (without Poppler)."""
+def convert_pdf_to_images(pdf_path, output_folder="pdf_images", dpi=72, use_threading=False, max_workers=4):
+    """
+    Converts each page of a PDF into an image and saves it.
+
+    Args:
+        pdf_path: Path to the PDF file
+        output_folder: Directory to save images
+        dpi: Resolution for the images (higher = better quality but larger files)
+        use_threading: Whether to use multi-threading for faster processing
+        max_workers: Maximum number of worker threads
+
+    Returns:
+        List of paths to the created images
+    """
     os.makedirs(output_folder, exist_ok=True)
 
     doc = fitz.open(pdf_path)
     image_paths = []
 
-    for page_number in range(len(doc)):
+    # Calculate zoom factor based on DPI (72 is the base DPI)
+    zoom = dpi / 72
+
+    def process_page(page_number):
         page = doc[page_number]
-        pix = page.get_pixmap()  # Render page as an image
+        # Get transformation matrix for better quality
+        mat = fitz.Matrix(zoom, zoom)
+        pix = page.get_pixmap(matrix=mat, alpha=False)
 
         img_path = os.path.join(output_folder, f"page_{page_number+1}.jpg")
-        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
-        img.save(img_path, "JPEG")
-        image_paths.append(img_path)
+        # Use PyMuPDF's built-in saving function instead of PIL
+        pix.save(img_path)
+        return img_path
+
+    # Use threading if enabled and if there are multiple pages
+    if use_threading and len(doc) > 1:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+            # Process pages in parallel
+            future_to_page = {executor.submit(process_page, page_num): page_num
+                              for page_num in range(len(doc))}
+
+            # Collect results in order
+            for future in concurrent.futures.as_completed(future_to_page):
+                image_paths.append(future.result())
+
+        # Sort paths by page number to maintain order
+        image_paths.sort(key=lambda x: int(x.split('_')[-1].split('.')[0]))
+    else:
+        # Process pages sequentially
+        for page_number in range(len(doc)):
+            image_paths.append(process_page(page_number))
 
     return image_paths
 
@@ -48,7 +83,7 @@ def cleanup_images():
         os.remove(img_file)
 
 
-def generate_questions(image_contents, n, perf_matrix, sid):
+def generate_questions(n, perf_matrix, sid):
     images = [load_image(img) for img in image_files]
 
     prompt_text = f"""Using the following context from the PDF, generate {n} multiple-choice questions (MCQs) with a difficulty level of {perf_matrix}, where difficulty is rated from 0 to 1, with 0 being super easy and 1 being the highest level of difficulty.
@@ -108,7 +143,7 @@ if __name__ == "__main__":
         sid, n, perf_matrix = student
 
         print(f"Generating {n} questions for student {sid}...")
-        questions = generate_questions(image_files, n, perf_matrix, sid)
+        questions = generate_questions(n, perf_matrix, sid)
         print("Questions generated successfully.")
         print(
             f"time taken for {sid}: {time.time() - individual_time:.2f} seconds")

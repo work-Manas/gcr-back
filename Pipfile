@@ -18,6 +18,7 @@ flask-jwt-extended = "*"
 flask-socketio = "*"
 "pdfminer.six" = "*"
 python-dotenv = "*"
+google-genai = "*"
 
 [dev-packages]
 
