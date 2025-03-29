@@ -2,61 +2,24 @@ from flask_jwt_extended import get_jwt_identity
 from flask import Blueprint, request, jsonify
 from bson import ObjectId
 from datetime import datetime
-from database import db, fs  # Import db and fs from database.py
-from auth import role_required  # Import role_required from auth.py
+from database import db, fs
+from auth import role_required
 from pdfminer.high_level import extract_text
 from io import BytesIO
+from question_generator import generate_questions
 
 quizzes_bp = Blueprint("quizzes", __name__)
 
 # Simulated Gemini API integration based on your data format
 
+number_of_questions = 5  # Number of questions to generate per student
 
-def gemini_generate_quiz(pdf_path, students, performance_scores):
-    """
-    Generate personalized quiz questions for each student based on the provided PDF and performance data.
-    Input: PDF path (BytesIO), list of student IDs, and their performance scores.
-    Output: List of JSON objects, each containing student_id and a list of questions.
-    """
+
+def gemini_generate_quiz(pdf_path, n, students, performance_scores):
     quizzes = []
     for student in students:
-        # In a real implementation, this would call the Gemini API with PDF content and performance data
-        # Here, we use your sample data as a placeholder
-        quiz_data = {
-            "student_id": student,
-            "questions": [
-                {
-                    "question": "What is the capital of France?",
-                    "options": ["Berlin", "Madrid", "Paris", "Rome"],
-                    "answer": "Paris",
-                    "topic": "Geography"
-                },
-                {
-                    "question": "Which data structure uses LIFO?",
-                    "options": ["Queue", "Stack", "Linked List", "Array"],
-                    "answer": "Stack",
-                    "topic": "Data Structures"
-                },
-                {
-                    "question": "Who developed the theory of relativity?",
-                    "options": ["Newton", "Einstein", "Tesla", "Galileo"],
-                    "answer": "Einstein",
-                    "topic": "Physics"
-                },
-                {
-                    "question": "What is the output of 3 + 2 * 2 in Python?",
-                    "options": ["10", "7", "8", "5"],
-                    "answer": "7",
-                    "topic": "Programming"
-                },
-                {
-                    "question": "What is H2O commonly known as?",
-                    "options": ["Oxygen", "Hydrogen", "Water", "Carbon Dioxide"],
-                    "answer": "Water",
-                    "topic": "Chemistry"
-                }
-            ]
-        }
+        quiz_data = generate_questions(
+            pdf_path, n, performance_scores[student], student)
         quizzes.append(quiz_data)
     return quizzes
 
@@ -99,7 +62,8 @@ def generate_quiz():
             performance_scores[student] = 0
 
     # Generate personalized quizzes using your data format
-    quizzes = gemini_generate_quiz(pdf_path, students, performance_scores)
+    quizzes = gemini_generate_quiz(
+        pdf_path, number_of_questions, students, performance_scores)
 
     # Store quiz assignment
     quiz_assignment = {

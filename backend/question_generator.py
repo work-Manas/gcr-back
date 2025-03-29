@@ -54,28 +54,6 @@ The output should be in the following JSON format:
     s1 = response.text.replace("```json\n", "")
     s2 = s1.replace("```", "")
     x = json.loads(s2)
-    with open('output.json', 'a') as outfile:
-        json.dump(x, outfile, indent=2)
+    # with open('output.json', 'a') as outfile:
+    #    json.dump(x, outfile, indent=2)
     return x
-
-
-if __name__ == "__main__":
-    # Sample student, n, performance data
-    students = [["id12366969", 10, 0.8], [
-        "id12366970", 15, 0.2], ["id12366971", 20, 0.999]]
-
-    # Replace with the actual path to your PDF file
-    file_path = pathlib.Path("file3.pdf")
-
-    # Read the file content
-    file_content = file_path.read_bytes()
-
-    # Iterate through each student and generate questions
-    init_time = time.time()
-    for student in students:
-        individual_time = time.time()
-        sid, n, perf_matrix = student
-        generate_questions(file_content, n, perf_matrix, sid)
-        print(
-            f"time taken for {sid}: {time.time() - individual_time:.2f} seconds")
-print(f"Total time taken: {time.time() - init_time:.2f} seconds")
