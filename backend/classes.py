@@ -30,8 +30,8 @@ def create_class():
         "code": code,
         "teacherId": ObjectId(user_id),
         "created_at": datetime.utcnow(),
-        "bannerLight": light_img,  # Embed the light banner image directly
-        "bannerDark": dark_img     # Embed the dark banner image directly
+        "bannerLight": light_img,
+        "bannerDark": dark_img
     }
     class_id = db.classes.insert_one(class_data).inserted_id
     return jsonify({"class_id": str(class_id), "code": code}), 201
