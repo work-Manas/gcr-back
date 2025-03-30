@@ -6,6 +6,7 @@ import string
 from database import db  # Import db from database.py
 from auth import role_required  # Import role_required from auth.py
 from flask_jwt_extended import get_jwt_identity  # Import get_jwt_identity
+from imgen import generate_banner
 
 classes_bp = Blueprint("classes", __name__)
 
@@ -22,11 +23,15 @@ def create_class():
         if not db.classes.find_one({"code": code}):
             break
 
+    # generate the banner image using the subject
+    light_img, dark_img = generate_banner(subject)
     class_data = {
         "subject": subject,
         "code": code,
         "teacherId": ObjectId(user_id),
-        "created_at": datetime.utcnow()
+        "created_at": datetime.utcnow(),
+        "bannerLight": light_img,  # Embed the light banner image directly
+        "bannerDark": dark_img     # Embed the dark banner image directly
     }
     class_id = db.classes.insert_one(class_data).inserted_id
     return jsonify({"class_id": str(class_id), "code": code}), 201
