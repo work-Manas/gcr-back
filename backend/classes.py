@@ -53,3 +53,35 @@ def join_class():
 
     db.classMembers.insert_one(membership)
     return jsonify({"message": "Joined class"}), 200
+
+
+@classes_bp.route("/student", methods=["GET"])
+@role_required("student")
+def get_student_classes():
+    user_id = get_jwt_identity()
+    memberships = db.classMembers.find({"studentId": ObjectId(user_id)})
+    classes = []
+    for membership in memberships:
+        class_doc = db.classes.find_one({"_id": membership["classId"]})
+        if class_doc:
+            classes.append({
+                "class_id": str(class_doc["_id"]),
+                "subject": class_doc["subject"],
+                "code": class_doc["code"]
+            })
+    return jsonify({"classes": classes}), 200
+
+
+@classes_bp.route("/teacher", methods=["GET"])
+@role_required("teacher")
+def get_teacher_classes():
+    user_id = get_jwt_identity()
+    classes = db.classes.find({"teacherId": ObjectId(user_id)})
+    class_list = []
+    for class_doc in classes:
+        class_list.append({
+            "class_id": str(class_doc["_id"]),
+            "subject": class_doc["subject"],
+            "code": class_doc["code"]
+        })
+    return jsonify({"classes": class_list}), 200

@@ -1,10 +1,9 @@
-from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask import Blueprint, request, jsonify
 from bson import ObjectId
 from datetime import datetime
 from database import db, fs
 from auth import role_required
-from pdfminer.high_level import extract_text
 from io import BytesIO
 from question_generator import generate_questions
 
@@ -212,3 +211,43 @@ def get_scores(quiz_id):
             })
 
     return jsonify({"scores": scores}), 200
+
+
+@quizzes_bp.route("/class/<class_id>", methods=["GET"])
+@jwt_required()
+def get_class_quizzes(class_id):
+    user_id = get_jwt_identity()
+    class_id = ObjectId(class_id)
+
+    if not (db.classes.find_one({"_id": class_id, "teacherId": ObjectId(user_id)}) or
+            db.classMembers.find_one({"classId": class_id, "studentId": ObjectId(user_id)})):
+        return jsonify({"error": "Unauthorized or class not found"}), 403
+
+    if str(db.classes.find_one({"_id": class_id})["teacherId"]) == user_id:
+        quizzes = db.quizAssignments.find({"classId": class_id})
+        quiz_list = []
+        for quiz in quizzes:
+            quiz_list.append({
+                "quiz_assignment_id": str(quiz["_id"]),
+                "noteId": str(quiz["noteId"]),
+                "deadline": quiz["deadline"].isoformat(),
+                "created_at": quiz["created_at"].isoformat()
+            })
+    else:
+        student_id = ObjectId(user_id)
+        personalized_quizzes = db.personalizedQuizzes.find({"studentId": student_id, "quizAssignmentId": {
+                                                           "$in": [q["_id"] for q in db.quizAssignments.find({"classId": class_id})]}})
+        quiz_list = []
+        for pq in personalized_quizzes:
+            quiz_assignment = db.quizAssignments.find_one(
+                {"_id": pq["quizAssignmentId"]})
+            status = "completed" if pq.get("submitted_at") else "pending"
+            score = pq.get("score")
+            quiz_list.append({
+                "quiz_assignment_id": str(pq["quizAssignmentId"]),
+                "title": quiz_assignment.get("title", "Untitled Quiz"),
+                "deadline": pq["deadline"].isoformat(),
+                "status": status,
+                "score": score
+            })
+    return jsonify({"quizzes": quiz_list}), 200
