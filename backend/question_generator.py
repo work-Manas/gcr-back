@@ -44,7 +44,7 @@ The output should be in the following JSON format:
         model="gemini-2.0-flash",
         contents=[
             types.Part.from_bytes(
-                data=file_content,
+                data=file_content.getvalue(),
                 mime_type='application/pdf',
             ),
             prompt_text

@@ -21,6 +21,7 @@ def gemini_generate_quiz(pdf_path, n, students, performance_scores):
         quiz_data = generate_questions(
             pdf_path, n, performance_scores[student], student)
         quizzes.append(quiz_data)
+    print("quizzes generated!")
     return quizzes
 
 
@@ -99,8 +100,7 @@ def get_quiz(quiz_id):
     """Retrieve a student's personalized quiz."""
     user_id = get_jwt_identity()
     quiz = db.personalizedQuizzes.find_one(
-        {"_id": ObjectId(quiz_id), "studentId": ObjectId(user_id)})
-
+        {"quizAssignmentId": ObjectId(quiz_id), "studentId": ObjectId(user_id)})
     if not quiz:
         return jsonify({"error": "Quiz not found"}), 404
 
@@ -116,7 +116,7 @@ def submit_quiz(quiz_id):
     """Submit a quiz and update performance metrics."""
     user_id = get_jwt_identity()
     quiz = db.personalizedQuizzes.find_one(
-        {"_id": ObjectId(quiz_id), "studentId": ObjectId(user_id)})
+        {"quizAssignmentId": ObjectId(quiz_id), "studentId": ObjectId(user_id)})
 
     if not quiz or quiz["submitted_at"]:
         return jsonify({"error": "Quiz not found or already submitted"}), 400
@@ -136,9 +136,8 @@ def submit_quiz(quiz_id):
 
     score = (correct_count / len(quiz["questions"])) * 100
 
-    # Update quiz record
     db.personalizedQuizzes.update_one(
-        {"_id": ObjectId(quiz_id)},
+        {"quizAssignmentId": ObjectId(quiz_id)},
         {"$set": {
             "answers": answers,
             "score": score,
@@ -182,19 +181,34 @@ def submit_quiz(quiz_id):
 def get_scores(quiz_id):
     """Retrieve scores and feedback for a quiz assignment."""
     user_id = get_jwt_identity()
+
+    # Fetch the quiz assignment document
     quiz_assignment = db.quizAssignments.find_one({"_id": ObjectId(quiz_id)})
+    if not quiz_assignment:
+        return jsonify({"error": "Quiz assignment not found"}), 404
 
-    if not quiz_assignment or str(quiz_assignment.get("teacherId")) != user_id:
-        return jsonify({"error": "Unauthorized or quiz not found"}), 403
+    # Fetch the associated class using the classId from the quiz assignment
+    class_id = quiz_assignment.get("classId")
+    class_doc = db.classes.find_one({"_id": class_id})
+    if not class_doc:
+        return jsonify({"error": "Associated class not found"}), 404
 
+    # Check if the logged-in teacher is the creator of the class
+    teacher_id = str(class_doc.get("teacherId"))
+    if teacher_id != user_id:
+        return jsonify({"error": "Unauthorized: You do not have permission to view this quiz's scores"}), 403
+
+    # Retrieve scores from personalizedQuizzes collection
     quizzes = db.personalizedQuizzes.find(
         {"quizAssignmentId": ObjectId(quiz_id)})
     scores = []
     for q in quizzes:
-        if q["score"] is not None:
+        if q.get("score") is not None:  # Check if score exists
             scores.append({
                 "student_id": str(q["studentId"]),
                 "score": q["score"],
-                "feedback": q["feedback"]
+                # Use .get() to safely handle missing feedback
+                "feedback": q.get("feedback")
             })
+
     return jsonify({"scores": scores}), 200
