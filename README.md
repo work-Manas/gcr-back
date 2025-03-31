@@ -41,6 +41,16 @@ GCR-Back is a backend application for managing classrooms, quizzes, notes, and c
 
 ---
 
+
+## DB DIAGRAM
+
+
+![diagram-export-3-31-2025-8_52_24-PM](https://github.com/user-attachments/assets/2cd088e1-9b61-484e-b72b-a43f1ce3df8f)
+
+
+---
+
+
 ## Setup Instructions
 
 1. Clone the repository:
