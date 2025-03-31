@@ -84,3 +84,5 @@ The final design should be visually balanced, with negative space to avoid clutt
 if __name__ == "__main__":
     subject = "Physics"
     x = generate_banner(subject)
+    x[0].show()
+    x[1].show()
